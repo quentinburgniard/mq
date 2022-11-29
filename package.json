@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "screenshot": "file:./screenshot",
+    "socket.io": "^4.5.3"
+  },
+  "main": "index.js",
+  "name": "mq",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon"
+  }
+}
