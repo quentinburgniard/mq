@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "puppeteer": "19.x"
+    "axios": "1.x"
   },
   "main": "index.js",
-  "name": "screenshot",
+  "name": "service",
   "private": true,
   "type": "module"
 }
