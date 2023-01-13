@@ -11,11 +11,12 @@ class Service {
   async create() {
     const data = {
       parameters: this.parameters,
-      service: this.service
+      service: this.service,
+      socket: this.authentication.socket
     };
     await axios.post('https://api.digitalleman.com/v2/functions', { data: data }, {
       headers: {
-        'authorization': `Bearer ${this.authentication}`
+        'authorization': `Bearer ${this.authentication.api}`
       }
     })
     .then((response) => {
