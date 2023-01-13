@@ -1,3 +1,4 @@
+import PDF from './pdf.js';
 import Screenshot from './screenshot.js';
 import { Server } from 'socket.io';
 
@@ -12,6 +13,9 @@ io.on('connection', (socket) => {
   socket.on('function', (serviceName, parameters, callback) => {
     let service = null;
     switch (serviceName) {
+      case 'pdf':
+        service = new PDF(socket.authentication, serviceName, parameters);
+        break;
       case 'screenshot':
         service = new Screenshot(socket.authentication, serviceName, parameters);
         break;
