@@ -5,12 +5,12 @@ class Screenshot extends Service {
   constructor(authentication, service, parameters) {
     super(authentication, service, parameters);
     this.height = parameters.height || 1080;
-    this.url = parameters.url
+    this.url = parameters.url;
     this.width = parameters.width || 1920;
   }
 
   async execute() {
-    await puppeteer.launch({
+    return await puppeteer.launch({
       defaultViewport: {
         height: this.height,
         width: this.width
@@ -18,12 +18,12 @@ class Screenshot extends Service {
     }).then(async (browser) => {
       const page = await browser.newPage();
       await page.goto(this.url);
-      let buffer = page.screenshot({
+      let buffer = await page.screenshot({
         quality: 100,
         type: 'jpeg'
       });
-      Promise.all([browser.close()]).then(() => {
-        console.log('resolve');
+      Promise.all([browser.close(), this.complete()]).then(() => {
+        return buffer;
       });
     });
   }

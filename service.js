@@ -8,6 +8,20 @@ class Service {
     this.service = service;
   }
 
+  async complete() {
+    const data = {
+      completedAt: new Date().toISOString()
+    };
+    await axios.put(`https://api.digitalleman.com/v2/functions/${this.id}`, { data: data }, {
+      headers: {
+        'authorization': `Bearer ${this.authentication.api}`
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   async create() {
     const data = {
       parameters: this.parameters,
@@ -25,45 +39,6 @@ class Service {
     .catch((error) => {
       console.log(error);
     });
-    return this.id;
-  }
-
-  api = {
-    async create() {
-      console.log(this.parameters);
-      const data = {
-        parameters: this.parameters,
-        service: this.service
-      };
-      console.log(data);
-      await axios.post('https://api.digitalleman.com/v2/functions', { data: data }, {
-        headers: {
-          'authorization': `Bearer ${this.authentication}`
-        }
-      })
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        //console.log(error);
-      });
-    },
-    async update() {
-      const data = {
-        completedAt: new Date().toISOString()
-      };
-      await axios.put(`https://api.digitalleman.com/v2/functions/${super.id}`, { data: data }, {
-        headers: {
-          'authorization': `Bearer ${super.authentication}`
-        }
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    }
   }
 }
 
