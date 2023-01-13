@@ -1,9 +1,9 @@
-import Service from "service";
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer';
+import Service from './service.js';
 
 class Screenshot extends Service {
   constructor(authentication, service, parameters) {
-    super(authentication, service);
+    super(authentication, service, parameters);
     this.height = parameters.height || 1080;
     this.url = parameters.url
     this.width = parameters.width || 1920;
@@ -19,14 +19,16 @@ class Screenshot extends Service {
     }).then(async (browser) => {
       const page = await browser.newPage();
       await page.goto(this.url);
-      return page.screenshot({
+      page.screenshot({
         quality: 100,
         type: 'jpeg'
       });
       await browser.close();
+      console.log('browser close');
     });
-    return response;
+    console.log('response');
+    return 'ok';
   }
 }
 
-module.exports = Screenshot;
+export default Screenshot;

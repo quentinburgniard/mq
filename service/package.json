@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "axios": "1.x"
-  },
-  "main": "index.js",
-  "name": "service",
-  "private": true,
-  "type": "module"
-}

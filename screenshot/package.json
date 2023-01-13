@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "puppeteer": "19.x"
-  },
-  "main": "index.js",
-  "name": "screenshot",
-  "private": true,
-  "type": "module"
-}
