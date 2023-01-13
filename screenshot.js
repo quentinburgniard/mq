@@ -10,7 +10,6 @@ class Screenshot extends Service {
   }
 
   async execute() {
-    console.log('execute');
     await puppeteer.launch({
       defaultViewport: {
         height: this.height,
@@ -19,15 +18,14 @@ class Screenshot extends Service {
     }).then(async (browser) => {
       const page = await browser.newPage();
       await page.goto(this.url);
-      page.screenshot({
+      let buffer = page.screenshot({
         quality: 100,
         type: 'jpeg'
       });
-      await browser.close();
-      console.log('browser close');
+      Promise.all([browser.close()]).then(() => {
+        console.log('resolve');
+      });
     });
-    console.log('response');
-    return 'ok';
   }
 }
 
