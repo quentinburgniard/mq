@@ -11,6 +11,7 @@ class Screenshot extends Service {
 
   async execute() {
     return await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: {
         height: this.height,
         width: this.width
