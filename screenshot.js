@@ -24,6 +24,7 @@ class Screenshot extends Service {
         type: 'jpeg'
       });
       Promise.all([browser.close(), this.complete()]).then(() => {
+        console.log(buffer);
         return buffer;
       });
     });
