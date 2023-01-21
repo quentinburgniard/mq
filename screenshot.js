@@ -19,12 +19,11 @@ class Screenshot extends Service {
     }).then(async (browser) => {
       const page = await browser.newPage();
       await page.goto(this.url);
-      let buffer = await page.screenshot({
+      buffer = await page.screenshot({
         quality: 100,
         type: 'jpeg'
       });
-      Promise.all([browser.close(), this.complete()]).then(() => {
-        console.log(buffer);
+      await Promise.all([browser.close(), this.complete()]).then(() => {
         return buffer;
       });
     });
