@@ -10,8 +10,7 @@ class Screenshot extends Service {
   }
 
   async execute() {
-    let buffer = 'test';
-    console.log('buffer define');
+    let buffer = null;
     await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: {
@@ -20,14 +19,17 @@ class Screenshot extends Service {
       }
     }).then(async (browser) => {
       const page = await browser.newPage();
+      await page.setCookie({
+        'domain': '.digitalleman.com',
+        'name': 't',
+        'value': this.authentication.api
+      });
       await page.goto(this.url);
       buffer = await page.screenshot({
         quality: 100,
         type: 'jpeg'
       });
-      await Promise.all([browser.close(), this.complete()]).then(() => {
-        console.log('promise all');
-      });
+      await Promise.all([browser.close(), this.complete()]);
     });
     return buffer;
   }
