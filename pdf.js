@@ -5,20 +5,30 @@ class PDF extends Service {
   constructor(authentication, service, parameters) {
     super(authentication, service, parameters);
     this.format = parameters.format || 'A4';
+    this.url = parameters.url;
   }
 
   async execute() {
-    return await puppeteer.launch().then(async (browser) => {
+    let buffer = null;
+    await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }).then(async (browser) => {
       const page = await browser.newPage();
-      await page.goto(this.url);
-      let buffer = await page.pdf({
+      await page.setCookie({
+        'domain': '.digitalleman.com',
+        'name': 't',
+        'value': this.authentication.api
+      });
+      await page.goto(this.url, {
+        waitUntil: 'networkidle0'
+      });
+      buffer = await page.pdf({
         format: this.format,
         printBackground: true
       });
-      Promise.all([browser.close(), this.complete()]).then(() => {
-        return buffer;
-      });
+      await Promise.all([browser.close(), this.complete()]);
     });
+    return buffer;
   }
 }
 

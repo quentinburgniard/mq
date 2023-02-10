@@ -22,7 +22,6 @@ io.on('connection', (socket) => {
     }
     service.create().then(() => {
       service.execute().then((response) => {
-        console.log(response);
         callback(response);
       })
     });
