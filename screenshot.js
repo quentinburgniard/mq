@@ -24,7 +24,9 @@ class Screenshot extends Service {
         'name': 't',
         'value': this.authentication.api
       });
-      await page.goto(this.url);
+      await page.goto(this.url, {
+        waitUntil: 'networkidle0'
+      });
       buffer = await page.screenshot({
         quality: 100,
         type: 'jpeg'
